@@ -21,8 +21,18 @@ Node *insertAtFront(Node *head, int number)
     return newNode;
 }
 
-Node *insertAtEnd(int number)
+Node *insertAtEnd(Node *head, int number)
 {
+    Node *newNode = new Node(number);
+    if (head == nullptr) {
+        return newNode;
+    }
+    Node* temp = head;
+    while(temp->next != NULL){
+        temp = temp->next;
+    }
+    temp->next = newNode;
+    return head;
 }
 
 Node *insertAtMiddle(int number)
@@ -43,7 +53,6 @@ void displayPrint(Node *head)
 
 int main()
 {
-
     Node *head = nullptr;
     cout << "\nEnter your choice";
     while (1)
@@ -74,7 +83,7 @@ int main()
             {
                 cout << "Enter number: ";
                 cin >> number;
-                insertAtEnd(number);
+                head = insertAtEnd(head, number);
             }
             else
                 cout << "Enter between 1-3";
@@ -91,9 +100,7 @@ int main()
         {
         }
         else
-        {
             cout << "Enter between 1-4";
-        }
     }
     cout << "\nSuccessfully Done\n";
 }
