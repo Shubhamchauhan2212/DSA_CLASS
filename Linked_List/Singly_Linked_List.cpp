@@ -24,11 +24,13 @@ Node *insertAtFront(Node *head, int number)
 Node *insertAtEnd(Node *head, int number)
 {
     Node *newNode = new Node(number);
-    if (head == nullptr) {
+    if (head == nullptr)
+    {
         return newNode;
     }
-    Node* temp = head;
-    while(temp->next != NULL){
+    Node *temp = head;
+    while (temp->next != NULL)
+    {
         temp = temp->next;
     }
     temp->next = newNode;
