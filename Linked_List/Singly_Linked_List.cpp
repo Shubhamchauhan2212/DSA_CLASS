@@ -37,8 +37,106 @@ Node *insertAtEnd(Node *head, int number)
     return head;
 }
 
-Node *insertAtMiddle(int number)
+Node *insertAtMiddle(Node *head, int number, int loc)
 {
+    Node *newNode = new Node(number);
+    if (loc == 0)
+    {
+        newNode->next = head;
+        return newNode;
+    }
+    if (head == nullptr)
+        return newNode;
+    Node *temp = head;
+    int k = 0;
+    while (k < loc - 1 && temp != NULL)
+    {
+        temp = temp->next;
+        k++;
+    }
+
+    if (temp == NULL)
+    {
+        cout << "\nLocation is invalid";
+        delete newNode;
+        return head;
+    }
+
+    newNode->next = temp->next;
+    temp->next = newNode;
+
+    return head;
+}
+
+Node *deleteAtFront(Node *head)
+{
+    if (head == nullptr)
+    {
+        cout << "\nLinked list is EMPTY";
+        return head;
+    }
+    Node *temp = head;
+    head = head->next;
+    temp->next = NULL;
+    cout << temp->data << " is deleted successfully";
+    delete temp;
+    return head;
+}
+
+Node *deleteAtEnd(Node *head)
+{
+    if (head == nullptr)
+    {
+        cout << "\nLinked list is EMPTY";
+        return head;
+    }
+    Node *temp = head;
+    Node *curr = head;
+    while (temp->next != NULL)
+    {
+        curr = temp;
+        temp = temp->next;
+    }
+    cout << temp->data << " is deleted successfully";
+    curr->next = NULL;
+    delete temp;
+    return head;
+}
+
+Node *deleteAtMiddle(Node *head, int loc)
+{
+    if (head == nullptr)
+    {
+        cout << "\nLinked list is EMPTY";
+        return head;
+    }
+    if (loc == 0)
+    {
+        Node *temp = head;
+        head = head->next;
+        cout << temp->data << " is deleted successfully\n";
+        delete temp;
+        return head;
+    }
+    Node *temp = head;
+    Node *curr = head;
+    int k = 0;
+    while (k < loc && temp != nullptr)
+    {
+        curr = temp;
+        temp = temp->next;
+        k++;
+    }
+    if (temp == nullptr)
+    {
+        cout << "\nInvalid location";
+        return head;
+    }
+    cout << temp->data << " is deleted successfully";
+    curr->next = temp->next;
+    temp->next = NULL;
+    delete temp;
+    return head;
 }
 
 void displayPrint(Node *head)
@@ -51,6 +149,26 @@ void displayPrint(Node *head)
         curr = curr->next;
     }
     cout << "NULL";
+}
+
+void searchFun(Node *head, int number)
+{
+    Node *curr = head;
+    int index = 0;
+    while (curr != NULL)
+    {
+        if (curr->data == number)
+        {
+            cout << "Availabe on: " << index << "th index";
+            return;
+        }
+        curr = curr->next;
+        index++;
+    }
+    if (curr == NULL)
+    {
+        cout << "\nNumber is not available";
+    }
 }
 
 int main()
@@ -77,9 +195,12 @@ int main()
             }
             else if (ch1 == 2)
             {
+                int loc;
                 cout << "Enter number: ";
                 cin >> number;
-                insertAtMiddle(number);
+                cout << "Enter location: ";
+                cin >> loc;
+                head = insertAtMiddle(head, number, loc);
             }
             else if (ch1 == 3)
             {
@@ -92,6 +213,26 @@ int main()
         }
         else if (ch == 2)
         {
+            int ch2;
+            cout << "\n1.Deletion At Front\n2.Deletion At Middle\n3.Deletion At End\nEnter here: ";
+            cin >> ch2;
+            if (ch2 == 1)
+            {
+                head = deleteAtFront(head);
+            }
+            else if (ch2 == 2)
+            {
+                int loc;
+                cout << "Enter location: ";
+                cin >> loc;
+                head = deleteAtMiddle(head, loc);
+            }
+            else if (ch2 == 3)
+            {
+                head = deleteAtEnd(head);
+            }
+            else
+                cout << "Enter between 1-3";
         }
         else if (ch == 3)
         {
@@ -100,6 +241,10 @@ int main()
         }
         else if (ch == 4)
         {
+            int number;
+            cout << "\nWhich number you wanna search: ";
+            cin >> number;
+            searchFun(head, number);
         }
         else
             cout << "Enter between 1-4";
